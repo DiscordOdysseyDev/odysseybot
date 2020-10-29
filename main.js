@@ -1,7 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('./config.json');
-const { debug } = require('console');
 
 const token = config.BOT_TOKEN;
 const prefix = config.PREFIX;
