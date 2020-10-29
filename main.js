@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('./config.json');
+const { debug } = require('console');
 
 const token = config.BOT_TOKEN;
 const prefix = config.PREFIX;
@@ -20,6 +21,7 @@ client.once('ready', ()=>{
 
 client.on('message', message=>{
     if (!message.content.startsWith(prefix) || message.author.bot) return;
+    console.log("trying to execute: " + message.content);
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
