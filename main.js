@@ -1,11 +1,28 @@
+const mysql = require('mysql');
 const fs = require('fs');
 const Discord = require('discord.js');
+
 const config = require('./config.json');
 
 const token = config.BOT_TOKEN;
 const prefix = config.PREFIX;
 
 const client = new Discord.Client();
+
+var con = mysql.createConnection({
+    host: "sql304.epizy.com",
+    user: "epiz_27083369",
+    password: "301ywjcp"
+});
+con.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+  
+    console.log('connected as id ' + connection.threadId);
+  });
+
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
