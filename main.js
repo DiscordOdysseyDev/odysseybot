@@ -10,17 +10,18 @@ const prefix = config.PREFIX;
 const client = new Discord.Client();
 
 var con = mysql.createConnection({
-    host: "sql304.epizy.com",
-    user: "epiz_27083369",
-    password: "301ywjcp"
+    host: "freedb.tech",
+    database: "freedbtech_OdysseyDB",
+    user: "freedbtech_odysseydev",
+    password: "CostarricA2010."
 });
 con.connect(function(err) {
     if (err) {
-      console.error('error connecting: ' + err.stack);
+      console.error(err.stack);
       return;
     }
   
-    console.log('connected as id ' + connection.threadId);
+    console.log('connected as id ' + con.threadId);
   });
 
 client.commands = new Discord.Collection();
