@@ -15,14 +15,6 @@ var con = mysql.createConnection({
     user: "freedbtech_odysseydev",
     password: "CostarricA2010."
 });
-con.connect(function(err) {
-    if (err) {
-      console.error(err.stack);
-      return;
-    }
-  
-    console.log('connected as id ' + con.threadId);
-  });
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
@@ -46,7 +38,8 @@ client.on('message', message=>{
     if(!client.commands.has(command)) return;
 
     try{
-        client.commands.get(command).execute(message, args);
+        if(client.commands.get(command).execute.length == 3) client.commands.get(command).execute(message, args, con);
+        else client.commands.get(command).execute(message, args);
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');
