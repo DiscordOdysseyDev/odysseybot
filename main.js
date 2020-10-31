@@ -38,8 +38,7 @@ client.on('message', message=>{
     if(!client.commands.has(command)) return;
 
     try{
-        if(client.commands.get(command).execute.length == 3) client.commands.get(command).execute(message, args, con);
-        else client.commands.get(command).execute(message, args);
+        client.commands.get(command).execute(message, args);
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');
