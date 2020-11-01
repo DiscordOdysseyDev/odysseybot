@@ -14,10 +14,21 @@ module.exports = {
             return;
         }
 
-        DB.query('INSERT INTO `players` (`discord-id`, `password` , `username`) VALUES (?, ?, ?)', [author.id, password, username], function (data, error) {
-            console.log('1 player inserted into the database');
-         });
-
-        message.channel.send(author.username + ' joined the game as: ' + username + '.');
+        DB.query('SELECT * FROM `players` WHERE `discord-id`', author.id, function(results, err) {
+            if(err) {
+                DB.end;
+                console.log(err);
+            }
+            if(!results.length) {
+                DB.query('INSERT INTO `players` (`discord-id`, `password` , `username`) VALUES (?, ?, ?)', [author.id, password, username], function (data, error) {
+                    console.log('1 player inserted into the database');
+                    message.channel.send(author.username + ' joined the game as: ' + username + '.');
+                });
+            }
+            else {
+                console.log('Rejected, the player is already registered')
+                message.channel.send('You are already registered');
+            }
+        });
     },
 };

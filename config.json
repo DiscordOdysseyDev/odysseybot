@@ -1,4 +1,5 @@
 {
     "BOT_TOKEN": "NzcwODEyMTkwMDU5OTIxNDc5.X5jAyw.f7FHb_BrY-TMkTUeBjA0myRvRiE",
-    "PREFIX" : "O!"
+    "PREFIX" : "O!",
+    "COUNTRIES_CHANNEL_ID" : ""
 }
