@@ -1,13 +1,13 @@
 const mysql = require('mysql');
 const fs = require('fs');
-const Discord = require('discord.js');
+const discord = require('discord.js');
 
 const config = require('./config.json');
 
 const token = config.BOT_TOKEN;
 const prefix = config.PREFIX;
 
-const client = new Discord.Client();
+const client = new discord.Client();
 
 var con = mysql.createConnection({
     host: "freedb.tech",
@@ -16,7 +16,7 @@ var con = mysql.createConnection({
     password: "CostarricA2010."
 });
 
-client.commands = new Discord.Collection();
+client.commands = new discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
