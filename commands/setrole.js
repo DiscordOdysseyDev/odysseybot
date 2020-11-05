@@ -8,11 +8,17 @@ module.exports = {
             message.channel.send('Syntax error, try again');
             return;
         }
-
-        var serverRole = message.guild.roles.cache.find(r => r.name === args[1]);
-        if(!serverRole) {
-            message.channel.send('Could not find the role '+args[1]+' in this server');
-            return;
+        
+        var serverRole;
+        if(args[1] == 'none') {
+            serverRole = '';
+        }
+        else {
+            serverRole = message.guild.roles.cache.find(r => r.name === args[1]);
+            if(!serverRole) {
+                message.channel.send('Could not find the role '+args[1]+' in this server');
+                return;
+            }
         }
 
         var gameRole;
