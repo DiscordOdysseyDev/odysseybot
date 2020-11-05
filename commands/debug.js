@@ -4,7 +4,7 @@ module.exports = {
     name: 'debug',
     description: 'debug options',
     execute(message, args){
-        if(args.lenght != 1) {
+        if(args.length != 1) {
             message.channel.send('Syntax error, try again');
             return;
         }
