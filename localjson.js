@@ -1,26 +1,24 @@
 const fsp = require('fs').promises;
 
-async function writeJSON(path, key, value) {
+async function writeJSON(path, key, subKey, value) {
     try {
         let data = await fsp.readFile(path);
         let obj = JSON.parse(data);
 
-        // set whatever property or properties in the object that you are trying to change
-        obj[key] = value;
+        obj[key][subKey] = value;
 
         await fsp.writeFile(path, JSON.stringify(obj, null, 2));
         console.log('data written');
-     } catch(e) {
-        // error handling here
-        console.log(e);
+     } catch(error) {
+        console.log(error);
         console.log('error sending message');
-        throw e;      // make sure caller can see the message
+        throw error;
      }
 }
 
 module.exports = {
-  writeToConfig: function(key, value) {
-    writeJSON('./config.json', key, value);
+  writeToConfig: function(key, subkey, value) {
+    writeJSON('./config.json', key, subkey, value);
   }
 }
 

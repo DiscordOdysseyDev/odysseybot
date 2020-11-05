@@ -1,10 +1,11 @@
 const mysql = require('mysql');
+const config = require('./config.json');
 
 var pool = mysql.createPool({
-    host: "freedb.tech",
-    database: "freedbtech_OdysseyDB",
-    user: "freedbtech_odysseydev",
-    password: "CostarricA2010."
+    host: config.DATABASE.HOST,
+    database: config.DATABASE.DATABASE,
+    user: config.DATABASE.USER,
+    password: config.DATABASE.PASSWORD
 });
 
 var DB = (function () {

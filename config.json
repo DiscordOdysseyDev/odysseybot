@@ -1,5 +1,18 @@
 {
-  "BOT_TOKEN": "NzcwODEyMTkwMDU5OTIxNDc5.X5jAyw.f7FHb_BrY-TMkTUeBjA0myRvRiE",
-  "PREFIX": "O!",
-  "MAIN_CHANNEL": "770811237327962152"
+  "BOT_CONFIG": {
+    "BOT_TOKEN": "NzcwODEyMTkwMDU5OTIxNDc5.X5jAyw.f7FHb_BrY-TMkTUeBjA0myRvRiE",
+    "PREFIX": "O!"
+  },
+  "DATABASE": {
+    "HOST": "freedb.tech",
+    "DATABASE": "freedbtech_OdysseyDB",
+    "USER": "freedbtech_odysseydev",
+    "PASSWORD": "CostarricA2010."
+  },
+  "CHANNELS": {
+    "MAIN_CHANNEL": "770811237327962152"
+  },
+  "ROLES": {
+    "ADMIN": "770810819646717962"
+  }
 }

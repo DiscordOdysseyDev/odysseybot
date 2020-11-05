@@ -4,16 +4,16 @@ const discord = require('discord.js');
 
 const config = require('./config.json');
 
-const token = config.BOT_TOKEN;
-const prefix = config.PREFIX;
+const token = config.BOT_CONFIG.BOT_TOKEN;
+const prefix = config.BOT_CONFIG.PREFIX;
 
 const client = new discord.Client();
 
 var con = mysql.createConnection({
-    host: "freedb.tech",
-    database: "freedbtech_OdysseyDB",
-    user: "freedbtech_odysseydev",
-    password: "CostarricA2010."
+    host: config.DATABASE.HOST,
+    database: config.DATABASE.DATABASE,
+    user: config.DATABASE.USER,
+    password: config.DATABASE.PASSWORD
 });
 
 client.commands = new discord.Collection();

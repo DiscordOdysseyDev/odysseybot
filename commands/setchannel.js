@@ -1,4 +1,4 @@
-const localjson = require('./../localjson.js');
+const localjson = require('../localjson.js');
 
 module.exports = {
     name: 'setchannel',
@@ -10,6 +10,6 @@ module.exports = {
             case 'main': key = 'MAIN_CHANNEL'; break;
             default: message.channel.send('Unknwon channel');
         }
-        localjson.writeToConfig(key, message.channel.id);
+        localjson.writeToConfig('CHANNELS', key, message.channel.id);
     },
 };

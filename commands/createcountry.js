@@ -4,12 +4,12 @@ module.exports = {
     name: 'createcountry',
     description: 'creates a country with the message author as the owner',
     execute(message, args){
-        var name = args[0];
-
         if(args.length != 1) {
             message.channel.send('Syntax error, try again');
             return;
         }
+
+        var name = args[0];
 
         message.guild.channels.create(name, { 
             type: 'text',
