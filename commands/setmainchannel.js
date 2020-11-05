@@ -1,12 +1,15 @@
+const localjson = require('./../localjson.js');
+
 module.exports = {
     name: 'setchannel',
     description: 'Sets this channel as the main channel',
     execute(message, args){
-        var ch = message.channel;
+        var key;
         switch(args[0])
         {
-            case 'main': message.channel.send(ch.name + ' id: ' + ch.id + ' will be set as the main channel.');
-            default: message.channel.send('Unknwon channel')
+            case 'main': key = 'MAIN_CHANNEL'; break;
+            default: message.channel.send('Unknwon channel');
         }
+        localjson.writeToConfig(key, message.channel.id);
     },
 };

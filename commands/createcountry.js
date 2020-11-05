@@ -18,11 +18,11 @@ module.exports = {
 
             if(!category) {
                 category = message.guild.channels.create('countries', { type: 'category' }).then(p => {
-                    c.setParent(p, { lockPermissions: true });
+                    c.setParent(p, { lockPermissions: false });
                 }).catch(error => console.log(error));
             }
             else {
-                c.setParent(category.id, { lockPermissions: true });
+                c.setParent(category.id, { lockPermissions: false });
             }
 
             c.overwritePermissions([
