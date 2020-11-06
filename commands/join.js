@@ -16,7 +16,6 @@ module.exports = {
 
         DB.query('SELECT * FROM `players` WHERE `discord-id`', author.id, function(results, err) {
             if(err) {
-                DB.end;
                 console.log(err);
             }
             if(!results.length) {

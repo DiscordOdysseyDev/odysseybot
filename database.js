@@ -8,6 +8,17 @@ var pool = mysql.createPool({
     password: config.DATABASE.PASSWORD
 });
 
+/*var DBP = (function (query, params) { 
+
+    return new Promise(function(resolve, reject) {
+        pool.getConnection(query, params, function(err, rows) {
+            if(err) reject(err);
+            else resolve(rows);
+        })
+    })
+
+})();*/
+
 var DB = (function () {
 
     function _query(query, params, callback) {

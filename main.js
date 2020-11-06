@@ -9,13 +9,6 @@ const prefix = config.BOT_CONFIG.PREFIX;
 
 const client = new discord.Client();
 
-var con = mysql.createConnection({
-    host: config.DATABASE.HOST,
-    database: config.DATABASE.DATABASE,
-    user: config.DATABASE.USER,
-    password: config.DATABASE.PASSWORD
-});
-
 client.commands = new discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 

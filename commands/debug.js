@@ -10,7 +10,7 @@ module.exports = {
         }
 
         switch(args[0]) {
-            case 'channels': console.log(config.CHANNELS);
+            case 'channels': console.log(config.CHANNELS); break;
             default: message.channel.send('Unknown option');
         }
     },
