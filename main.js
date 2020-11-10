@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const tick = require('./ticker.js');
 const fs = require('fs');
 const discord = require('discord.js');
 
@@ -8,9 +8,10 @@ const token = config.BOT_CONFIG.BOT_TOKEN;
 const prefix = config.BOT_CONFIG.PREFIX;
 
 const client = new discord.Client();
+const ticker = new tick.Ticker(client);
 
 client.commands = new discord.Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -18,7 +19,9 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', ()=>{
-    console.log('Bot deployed succesfuly')
+    console.log('Bot deployed succesfuly');
+    console.log('Deploying timer...');
+    ticker.start();
 })
 
 client.on('message', message=>{
