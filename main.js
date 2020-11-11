@@ -4,7 +4,7 @@ const discord = require('discord.js');
 
 const config = require('./config.json');
 
-const token = config.BOT_CONFIG.BOT_TOKEN;
+const token = process.env.BOT_TOKEN;
 const prefix = config.BOT_CONFIG.PREFIX;
 
 const client = new discord.Client();
