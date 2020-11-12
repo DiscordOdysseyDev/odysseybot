@@ -1,3 +1,5 @@
+const keep_alive = require('./keep_alive.js');
+
 const tick = require('./ticker.js');
 const fs = require('fs');
 const discord = require('discord.js');

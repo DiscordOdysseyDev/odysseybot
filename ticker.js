@@ -7,11 +7,12 @@ var timer;
 var mainChannel;
 var logChannel;
 
-var turn = 0;
+var turn;
 
 function update() {
-    turn = await localDB.get('turn');
-    mainChannel.send('turn #' + turn);
+    localDB.get('turn').then(r => console.log(turn));
+    localDB.set('turn', turn);
+    logChannel.send('turn #' + turn);
 }
 
 function Ticker(client) {
@@ -37,7 +38,7 @@ Ticker.prototype.start = function() {
 
         mainChannel = that.client.channels.cache.find(channel => channel.name === m);
         logChannel = that.client.channels.cache.find(channel => channel.name === l);
-        mainChannel.send('ticker.js started');
+        logChannel.send('ticker.js started');
     })
     DB.query('SELECT * FROM `game_status`', null, function(results, error) {
         if(error){
@@ -49,8 +50,9 @@ Ticker.prototype.start = function() {
         }
     });
     
+    localDB.empty();
     localDB.set('turn', 0);
-    timer = setInterval(update, 1800000);
+    timer = setInterval(update, 6000);
 }
 
 module.exports = {
