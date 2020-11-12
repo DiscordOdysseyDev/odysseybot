@@ -1,6 +1,7 @@
 const DB = require('./database.js');
-const discord = require('discord.js');
+const LocalDB = require('@replit/database');
 
+var localDB = new LocalDB();
 var timer;
 
 var mainChannel;
@@ -9,7 +10,8 @@ var logChannel;
 var turn = 0;
 
 function update() {
-    mainChannel.send('turn tick');
+    turn = await localDB.get('turn');
+    mainChannel.send('turn #' + turn);
 }
 
 function Ticker(client) {
@@ -47,6 +49,7 @@ Ticker.prototype.start = function() {
         }
     });
     
+    localDB.set('turn', 0);
     timer = setInterval(update, 1800000);
 }
 
