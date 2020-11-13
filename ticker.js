@@ -54,7 +54,7 @@ Ticker.prototype.start = function() {
     });
     
     localDB.empty().then(localDB.set('turn', 0));
-    timer = setInterval(update, 6000);
+    timer = setInterval(update, 1800000);
 }
 
 module.exports = {
