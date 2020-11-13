@@ -10,9 +10,12 @@ var logChannel;
 var turn;
 
 function update() {
-    localDB.get('turn').then(r => console.log(turn));
-    localDB.set('turn', turn);
-    logChannel.send('turn #' + turn);
+    localDB.get('turn', { raw: false }).then(r => {
+        localDB.set('turn', r+1).then(c => {
+            turn = r;
+            logChannel.send('turn #'+turn);
+        })
+    });
 }
 
 function Ticker(client) {
@@ -50,8 +53,7 @@ Ticker.prototype.start = function() {
         }
     });
     
-    localDB.empty();
-    localDB.set('turn', 0);
+    localDB.empty().then(localDB.set('turn', 0));
     timer = setInterval(update, 6000);
 }
 
