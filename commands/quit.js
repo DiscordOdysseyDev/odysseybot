@@ -16,7 +16,7 @@ module.exports = {
                 message.channel.send('You have not joined the game yet');
             }
             else {
-                DB.query('DELETE FROM `players` WHERE `discord-id` = ?', author.id, function (data, error) {
+                DB.query('DELETE FROM `players` WHERE `discord-id` = ?', message.author.id, function (data, error) {
                     console.log('1 player deleted from the database');
                     message.channel.send(author.username + ' has left the game.');
                  });
