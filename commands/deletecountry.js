@@ -25,6 +25,7 @@ module.exports = {
                         return;
                     }
                     else{
+                        console.log(results['game-id']);
                         if(results.length){
                             DB.query('DELETE FROM `countries` WHERE `game-id` = ?', results['game-id'], function(results, error) {
                                 if(error) {
