@@ -14,9 +14,9 @@ module.exports = {
             return;
         }
 
-        DB.query('SELECT * FROM `players` WHERE `discord-id`', author.id, function(results, err) {
-            if(err) {
-                console.log(err);
+        DB.query('SELECT * FROM `players` WHERE `discord-id`', author.id, function(results, error) {
+            if(error) {
+                console.log(error);
             }
             if(!results.length) {
                 DB.query('INSERT INTO `players` (`discord-id`, `password` , `username`) VALUES (?, ?, ?)', [author.id, password, username], function (data, error) {
