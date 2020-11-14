@@ -19,7 +19,7 @@ module.exports = {
                         return;
                     }
                 }
-                DB.query('SELECT FROM `players` WHERE `discord-id` = ?', message.author.id, function(results, error) {
+                DB.query('SELECT * FROM `players` WHERE `discord-id`', message.author.id, function(results, error) {
                     if(error){
                         console.log(error);
                         return;

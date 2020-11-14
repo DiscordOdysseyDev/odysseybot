@@ -6,7 +6,7 @@ module.exports = {
     execute(message, args){
         var author = message.author;
 
-        DB.query('SELECT * FROM `players` WHERE `discord-id`', author.id, function(results, err) {
+        DB.query('SELECT * FROM `players` WHERE `discord-id` = ?', author.id, function(results, err) {
             if(err) {
                 DB.end;
                 console.log(err);
