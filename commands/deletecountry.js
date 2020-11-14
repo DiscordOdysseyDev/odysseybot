@@ -5,7 +5,7 @@ module.exports = {
     description: 'Deletes a country',
     execute(message, args){
 
-        DB.query('SELECT * FROM `roles` WHERE `game_role` = `ADMIN`', null, function(results, error) {
+        DB.query('SELECT * FROM `roles` WHERE `game_role` = ?', 'ADMIN', function(results, error) {
             if(error) {
                 console.log(error);
                 return;
