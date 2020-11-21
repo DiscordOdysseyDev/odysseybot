@@ -18,14 +18,13 @@ function update() {
     });
 }
 
-function Ticker(client) {
-    this.client = client;
+function Ticker(guild) {
+    this.guild = guild;
 }
 
 Ticker.prototype.start = function() {
     let m;
     let l;
-    let that = this;
     DB.query('SELECT * FROM `channels`', null, function(results, error) {
         if(error){
             console.log(error);
@@ -39,8 +38,8 @@ Ticker.prototype.start = function() {
               });
         }
 
-        mainChannel = that.client.channels.cache.find(channel => channel.name === m);
-        logChannel = that.client.channels.cache.find(channel => channel.name === l);
+        mainChannel = that.guild.channels.cache.find(channel => channel.name === m);
+        logChannel = that.guild.channels.cache.find(channel => channel.name === l);
         logChannel.send('ticker.js started');
     })
     DB.query('SELECT * FROM `game_status`', null, function(results, error) {

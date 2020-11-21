@@ -3,15 +3,17 @@ var DB = require('../database.js');
 module.exports = {
     name: 'setrole',
     description: 'assigns a server role to a game role',
-    execute(message, args){
+    execute(message, args, callback){
         if(args.length != 2) {
             message.channel.send('Syntax error, try again');
+            callbackFunc('bad syntax');
             return;
         }
         
         var serverRole = message.guild.roles.cache.find(r => r.name === args[0]);
         if(!serverRole) {
             message.channel.send('Could not find the role '+args[1]+' in this server');
+            callbackFunc('Unknown role');
             return;
         }
         
@@ -20,21 +22,22 @@ module.exports = {
         switch(args[1])
         {
             case 'admin': gameRole = 'ADMIN'; break;
-            default: message.channel.send('Could not find the game role '+args[1]);
+            default: message.channel.send('Could not find the game role '+args[1]); callbackFunc('Unknown role'); return;
         }
         
         DB.query('SELECT * FROM `roles` WHERE `game_role` = ?', gameRole, function(results, error) {
             if(error){
-                message.channel.send('There was an error processing this command');
                 console.log(error);
+                callbackFunc('query error');
+                return
             }
             
             if(results.length){
                 console.log('role exists');
                 DB.query('DELETE FROM `roles` WHERE `game_role` = ?', gameRole, function(results, error) {
                     if(error){
-                        message.channel.send('There was an error processing this command');
                         console.log(error);
+                        callbackFunc('query error');
                         return;
                     }
                     console.log('A role with the ingame role '+channelRole+' has been deleted');
@@ -45,14 +48,16 @@ module.exports = {
                 if(error){
                     message.channel.send('There was an error processing this command');
                     console.log(error);
+                    callbackFunc('query error');
+                    return;
                 }
         
                 if(results.length){
                     console.log('id exists');
                     DB.query('UPDATE `roles` SET `game_role` = ? WHERE `role_id`', [gameRole, serverRole.id], function(results, error) {
                         if(error){
-                            message.channel.send('There was an error processing this command');
                             console.log(error);
+                            callbackFunc('query error');
                             return;
                         }
                         console.log(results);
@@ -62,8 +67,8 @@ module.exports = {
                     console.log('id does not exist')
                     DB.query('INSERT INTO `roles` (`role_name`, `role_id` , `game_role`) VALUES (?, ?, ?)', [serverRole.name, serverRole.id, gameRole], function (results, error) {
                         if(error){
-                            message.channel.send('There was an error processing this command');
                             console.log(error);
+                            callbackFunc('query error');
                             return;
                         }
                         console.log(serverRole.name+' set as '+gameRole+' ingame role');
@@ -71,7 +76,13 @@ module.exports = {
                     }
                 });
             });
-
+        
         message.channel.send(serverRole.name+' succesfuly set as '+gameRole+' ingame role');
+
+        function callbackFunc(error) {
+            if(typeof callback == "function") {
+                callback(error + '@ module ||setrole.js||');
+            }
+        }
     },
 };

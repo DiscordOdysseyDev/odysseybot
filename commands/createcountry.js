@@ -4,15 +4,17 @@ const DB = require('../database.js');
 module.exports = {
     name: 'createcountry',
     description: 'creates a country with the message author as the owner',
-    execute(message, args){
+    execute(message, args, callback){
         if(args.length != 1) {
             message.channel.send('Syntax error, try again');
+            callbackFunc('bad syntax');
             return;
         }
 
         DB.query('SELECT * FROM `players` WHERE `discord-id` = ?', message.author.id, function(results, error) { 
             if(error){
                 console.log(error);
+                callbackFunc('query error');
                 return;
             }
             else {
@@ -53,6 +55,7 @@ module.exports = {
                     DB.query('INSERT INTO `countries` (`game_id`, `channel_id`) VALUES (?, ?)', [results['game-id'], c.id], function(results, error) {
                         if(error){
                             console.log(error);
+                            callbackFunc('query error');
                             return;
                         }
                     });
@@ -63,5 +66,11 @@ module.exports = {
                 }
             }
         })
+
+        function callbackFunc(error) {
+            if(typeof callback == "function") {
+                callback(error + '@ module ||createcountry.js||');
+            }
+        }
     },
 };
