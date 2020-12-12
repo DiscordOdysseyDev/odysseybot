@@ -9,12 +9,14 @@ module.exports = {
         DB.query('SELECT * FROM `players` WHERE `discord-id` = ?', author.id, function(results, err) {
             if(err) {
                 console.log(err);
-                callbackFunc('query error');
+                callbackFunc('query error', null);
                 return;
             }
             if(!results.length) {
                 console.log('Rejected, the player is not registered')
                 message.channel.send('You have not joined the game yet');
+                callbackFunc('command rejected', null);
+                return;
             }
             else {
                 DB.query('DELETE FROM `players` WHERE `discord-id` = ?', message.author.id, function (data, error) {
@@ -27,10 +29,16 @@ module.exports = {
                  });
             }
         });
+        callbackFunc(null, author.username + 'left the game');
 
-        function callbackFunc(error) {
+        function callbackFunc(error, result) {
             if(typeof callback == "function") {
-                callback(error + '@ module ||hi.js||');
+                if(error) {
+                    callback(error + '@ module ||hi.js||', null);
+                }
+                if(result) {
+                    callback(null, result);
+                }
             }
         }
     },

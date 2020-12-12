@@ -7,14 +7,14 @@ module.exports = {
     execute(message, args, callback){
         if(args.length != 1) {
             message.channel.send('Syntax error, try again');
-            callbackFunc('bad syntax');
+            callbackFunc('bad syntax', null);
             return;
         }
 
         DB.query('SELECT * FROM `players` WHERE `discord-id` = ?', message.author.id, function(results, error) { 
             if(error){
                 console.log(error);
-                callbackFunc('query error');
+                callbackFunc('query error', null);
                 return;
             }
             else {
@@ -55,7 +55,7 @@ module.exports = {
                     DB.query('INSERT INTO `countries` (`game_id`, `channel_id`) VALUES (?, ?)', [results['game-id'], c.id], function(results, error) {
                         if(error){
                             console.log(error);
-                            callbackFunc('query error');
+                            callbackFunc('query error', null);
                             return;
                         }
                     });
@@ -63,13 +63,15 @@ module.exports = {
                     }).catch(error => console.log(error));
                 
                     message.channel.send('The country: ´' + name + '´will be created with ´' + message.author.username + '´ as the owner.');
+                    callbackFunc(null, name + ' created with ' + message.author.username + ' as the owner');
                 }
             }
         })
 
-        function callbackFunc(error) {
+        function callbackFunc(error, result) {
             if(typeof callback == "function") {
-                callback(error + '@ module ||createcountry.js||');
+                if(error) callback(error + '@ module ||createcountry.js||', null);
+                if(!error) callback(null, result); 
             }
         }
     },

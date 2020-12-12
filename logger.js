@@ -20,8 +20,11 @@ function Logger(client) {
     })
 }
 
-Logger.prototype.log = function(contents) {
-    console.log(logChannel);
+Logger.prototype.error = function(contents) {
+    logChannel.send('Fatal error: ' + contents);
+}
+
+Logger.prototype.results = function(contents) {
     logChannel.send(contents);
 }
 

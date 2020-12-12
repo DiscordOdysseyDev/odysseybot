@@ -6,14 +6,14 @@ module.exports = {
     execute(message, args, callback){
         if(args.length != 2) {
             message.channel.send('Syntax error, try again');
-            callbackFunc('bad syntax');
+            callbackFunc('bad syntax', null);
             return;
         }
         
         var serverRole = message.guild.roles.cache.find(r => r.name === args[0]);
         if(!serverRole) {
             message.channel.send('Could not find the role '+args[1]+' in this server');
-            callbackFunc('Unknown role');
+            callbackFunc('Unknown role', null);
             return;
         }
         
@@ -28,7 +28,7 @@ module.exports = {
         DB.query('SELECT * FROM `roles` WHERE `game_role` = ?', gameRole, function(results, error) {
             if(error){
                 console.log(error);
-                callbackFunc('query error');
+                callbackFunc('query error', null);
                 return
             }
             
@@ -37,7 +37,7 @@ module.exports = {
                 DB.query('DELETE FROM `roles` WHERE `game_role` = ?', gameRole, function(results, error) {
                     if(error){
                         console.log(error);
-                        callbackFunc('query error');
+                        callbackFunc('query error', null);
                         return;
                     }
                     console.log('A role with the ingame role '+channelRole+' has been deleted');
@@ -48,7 +48,7 @@ module.exports = {
                 if(error){
                     message.channel.send('There was an error processing this command');
                     console.log(error);
-                    callbackFunc('query error');
+                    callbackFunc('query error', null);
                     return;
                 }
         
@@ -57,7 +57,7 @@ module.exports = {
                     DB.query('UPDATE `roles` SET `game_role` = ? WHERE `role_id`', [gameRole, serverRole.id], function(results, error) {
                         if(error){
                             console.log(error);
-                            callbackFunc('query error');
+                            callbackFunc('query error', null);
                             return;
                         }
                         console.log(results);
@@ -68,7 +68,7 @@ module.exports = {
                     DB.query('INSERT INTO `roles` (`role_name`, `role_id` , `game_role`) VALUES (?, ?, ?)', [serverRole.name, serverRole.id, gameRole], function (results, error) {
                         if(error){
                             console.log(error);
-                            callbackFunc('query error');
+                            callbackFunc('query error', null);
                             return;
                         }
                         console.log(serverRole.name+' set as '+gameRole+' ingame role');
@@ -78,10 +78,16 @@ module.exports = {
             });
         
         message.channel.send(serverRole.name+' succesfuly set as '+gameRole+' ingame role');
+        callbackFunc(null, serverRole.name+' succesfuly set as '+gameRole+' ingame role');
 
-        function callbackFunc(error) {
+        function callbackFunc(error, result) {
             if(typeof callback == "function") {
-                callback(error + '@ module ||setrole.js||');
+                if(error) {
+                    callback(error + '@ module ||setrole.js||', null);
+                }
+                if(result) {
+                    callback(null, result);
+                }
             }
         }
     },
