@@ -20,18 +20,11 @@ function update() {
     });
 }
 
-const job = new CronJob('0 */10 * * * *', function() {
+const job = new CronJob('00 00 00 * * *', function() {
 	const d = new Date();
 	logChannel.send('Turn changed at: ', d)
     update();
 });
-
-/*const job = Cronnjob.scheduled('0 1 * * *', () => {
-   console.log('Running a job at 01:00 at America/Sao_Paulo timezone');
- }, {
-   scheduled: true,
-   timezone: "Canada/Central"
- });*/
 
 function Ticker(client) {
     this.client = client;
@@ -67,8 +60,6 @@ Ticker.prototype.start = function() {
             turn = results['turn'];
         }
     });
-    
-    //timer = setInterval(update, 1800000);
 }
 
 Ticker.prototype.clear = function() {
